@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_ui/core/theme/presentation/widgets/pages/dashboard_page.dart';
+import 'package:flutter_ui/core/presentation/pages/dashboard_page.dart';
 import 'core/theme/app_theme.dart';
 
 void main() {

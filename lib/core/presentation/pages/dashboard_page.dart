@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_ui/core/theme/app_color.dart';
-import 'package:flutter_ui/core/theme/presentation/widgets/charts/line_chart_widget.dart';
-import 'package:flutter_ui/core/theme/presentation/widgets/dashboard/stats_card.dart';
-import 'package:flutter_ui/core/theme/presentation/widgets/header/app_header.dart';
-import 'package:flutter_ui/core/theme/presentation/widgets/sidebar/sidebar_menu.dart';
+import 'package:flutter_ui/core/presentation/widgets/charts/line_chart_widget.dart';
+import 'package:flutter_ui/core/presentation/widgets/dashboard/stats_card.dart';
+import 'package:flutter_ui/core/presentation/widgets/header/app_header.dart';
+import 'package:flutter_ui/core/presentation/widgets/sidebar/sidebar_menu.dart';
 import 'package:flutter_ui/core/theme/text_styles.dart';
 
 class DashboardPage extends StatefulWidget {
