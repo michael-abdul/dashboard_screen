@@ -58,9 +58,9 @@ class _DashboardPageState extends State<DashboardPage> {
                         _buildChartsSection(),
                         const SizedBox(height: 32),
 
-                           // Department Chart Section
-                      _buildDepartmentSection(),
-                      const SizedBox(height: 32),
+                        // Department Chart Section
+                        _buildDepartmentSection(),
+                        const SizedBox(height: 32),
 
                         // Recent Activity Section
                         _buildRecentActivitySection(),
@@ -99,8 +99,14 @@ class _DashboardPageState extends State<DashboardPage> {
         ),
         ElevatedButton.icon(
           onPressed: () {},
-          icon: const Icon(Icons.add, color: Colors.white,),
-          label: const Text('Add New Project', style:TextStyle( color: Colors.white,)),
+          icon: const Icon(
+            Icons.add,
+            color: Colors.white,
+          ),
+          label: const Text('Add New Project',
+              style: TextStyle(
+                color: Colors.white,
+              )),
           style: ElevatedButton.styleFrom(
             backgroundColor: AppColors.primary,
             padding: const EdgeInsets.symmetric(
@@ -117,53 +123,113 @@ class _DashboardPageState extends State<DashboardPage> {
   }
 
   Widget _buildStatsSection() {
-    return GridView.count(
-      shrinkWrap: true,
-      crossAxisCount: 4,
-      crossAxisSpacing: 24,
-      mainAxisSpacing: 24,
-      physics: const NeverScrollableScrollPhysics(),
-      children: const [
-        StatsCard(
-          title: 'Total Revenue',
-          value: '\$54,239',
-          subValue: '428 orders',
-          icon: Icons.attach_money,
-          iconColor: Colors.green,
-          isIncreased: true,
-          percentageChange: '12.5%',
-        ),
-        StatsCard(
-          title: 'Active Projects',
-          value: '95',
-          subValue: '32 in progress',
-          icon: Icons.work,
-          iconColor: Colors.blue,
-          isIncreased: true,
-          percentageChange: '8.2%',
-        ),
-        StatsCard(
-          title: 'Team Members',
-          value: '248',
-          subValue: '24 new this month',
-          icon: Icons.people,
-          iconColor: Colors.purple,
-          isIncreased: false,
-          percentageChange: '2.4%',
-        ),
-        StatsCard(
-          title: 'Total Tasks',
-          value: '1,257',
-          subValue: '158 completed',
-          icon: Icons.task,
-          iconColor: Colors.orange,
-          isIncreased: true,
-          percentageChange: '4.3%',
-        ),
-      ],
+    final screenWidth = MediaQuery.of(context).size.width;
+    final isSmallScreen = screenWidth < 1200;
+
+    return Wrap(
+      spacing: isSmallScreen ? 12 : 16,
+      runSpacing: isSmallScreen ? 12 : 16,
+    children: [
+       _buildStatCard(
+         width: _calculateCardWidth(screenWidth),
+         title: 'Total Revenue',
+         value: '\$54,239',
+         subValue: '428 orders',
+         icon: Icons.attach_money,
+         iconColor: Colors.green,
+         isIncreased: true, 
+         percentageChange: '12.5%',
+       ),
+       _buildStatCard(
+         width: _calculateCardWidth(screenWidth),
+         title: 'Active Projects',
+         value: '95',
+         subValue: '32 in progress',
+         icon: Icons.work,
+         iconColor: Colors.blue,
+         isIncreased: true,
+         percentageChange: '8.2%',
+       ),
+       _buildStatCard(
+         width: _calculateCardWidth(screenWidth),
+         title: 'Team Members',
+         value: '248',
+         subValue: '24 new this month', 
+         icon: Icons.people,
+         iconColor: Colors.purple,
+         isIncreased: false,
+         percentageChange: '2.4%',
+       ),
+       _buildStatCard(
+         width: _calculateCardWidth(screenWidth),
+         title: 'Total Tasks',
+         value: '1,257',
+         subValue: '158 completed',
+         icon: Icons.task,
+         iconColor: Colors.orange,
+         isIncreased: true,
+         percentageChange: '4.3%',
+       ),
+       _buildStatCard(
+         width: _calculateCardWidth(screenWidth),
+         title: 'Completed Tasks',
+         value: '845',
+         subValue: '64 this week',
+         icon: Icons.check_circle_outline,
+         iconColor: Colors.teal,
+         isIncreased: true,
+         percentageChange: '5.8%',
+       ),
+       _buildStatCard(
+         width: _calculateCardWidth(screenWidth),
+         title: 'Total Hours',
+         value: '2,450',
+         subValue: '160 this month',
+         icon: Icons.access_time,
+         iconColor: Colors.amber,
+         isIncreased: false,
+         percentageChange: '1.2%',
+       ),
+     ],
     );
   }
-  
+
+  double _calculateCardWidth(double screenWidth) {
+    if (screenWidth < 600) {
+      return screenWidth - 32; // Full width - padding on mobile
+    } else if (screenWidth < 900) {
+      return (screenWidth - 48) / 2; // 2 cards per row
+    } else if (screenWidth < 1200) {
+      return (screenWidth - 64) / 3; // 3 cards per row
+    } else {
+      return (screenWidth - 80) / 4; // 4 cards per row
+    }
+  }
+
+  Widget _buildStatCard({
+    required double width,
+    required String title,
+    required String value,
+    required String subValue,
+    required IconData icon,
+    required Color iconColor,
+    required bool isIncreased,
+    required String percentageChange,
+  }) {
+    return Container(
+      width: width,
+      constraints: const BoxConstraints(minHeight: 180),
+      child: StatsCard(
+        title: title,
+        value: value,
+        subValue: subValue,
+        icon: icon,
+        iconColor: iconColor,
+        isIncreased: isIncreased,
+        percentageChange: percentageChange,
+      ),
+    );
+  }
 
   Widget _buildChartsSection() {
     return Row(
@@ -185,65 +251,66 @@ class _DashboardPageState extends State<DashboardPage> {
             title: 'Weekly Activity',
             subtitle: 'Task Completion Rate',
             chart: const BarChartWidget(),
+          ),
         ),
-      ),
       ],
     );
   }
+
   Widget _buildDepartmentSection() {
-  return Container(
-    decoration: BoxDecoration(
-      borderRadius: BorderRadius.circular(16),
-      color: AppColors.cardBackground,
-      border: Border.all(
-        color: Colors.grey.withOpacity(0.1),
-      ),
-    ),
-    child: Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Padding(
-          padding: const EdgeInsets.fromLTRB(24, 24, 24, 0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              const Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Department Overview',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  SizedBox(height: 8),
-                  Text(
-                    'Employee distribution across departments',
-                    style: TextStyle(
-                      color: Colors.grey,
-                      fontSize: 14,
-                    ),
-                  ),
-                ],
-              ),
-              IconButton(
-                onPressed: () {},
-                icon: const Icon(
-                  Icons.more_horiz,
-                  color: Colors.grey,
-                ),
-              ),
-            ],
-          ),
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(16),
+        color: AppColors.cardBackground,
+        border: Border.all(
+          color: Colors.grey.withOpacity(0.1),
         ),
-        const SizedBox(height: 24),
-        const AdvancedPieChart(),
-      ],
-    ),
-  );
-}
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: const EdgeInsets.fromLTRB(24, 24, 24, 0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Department Overview',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    SizedBox(height: 8),
+                    Text(
+                      'Employee distribution across departments',
+                      style: TextStyle(
+                        color: Colors.grey,
+                        fontSize: 14,
+                      ),
+                    ),
+                  ],
+                ),
+                IconButton(
+                  onPressed: () {},
+                  icon: const Icon(
+                    Icons.more_horiz,
+                    color: Colors.grey,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(height: 24),
+          const AdvancedPieChart(),
+        ],
+      ),
+    );
+  }
 
   Widget _buildChartCard({
     required String title,
