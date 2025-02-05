@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_ui/core/presentation/widgets/charts/bar_chart_widget.dart';
+import 'package:flutter_ui/core/presentation/widgets/charts/pie_chart_widget.dart';
 import 'package:flutter_ui/core/theme/app_color.dart';
 import 'package:flutter_ui/core/presentation/widgets/charts/line_chart_widget.dart';
 import 'package:flutter_ui/core/presentation/widgets/dashboard/stats_card.dart';
@@ -57,6 +58,10 @@ class _DashboardPageState extends State<DashboardPage> {
                         _buildChartsSection(),
                         const SizedBox(height: 32),
 
+                           // Department Chart Section
+                      _buildDepartmentSection(),
+                      const SizedBox(height: 32),
+
                         // Recent Activity Section
                         _buildRecentActivitySection(),
                       ],
@@ -94,8 +99,8 @@ class _DashboardPageState extends State<DashboardPage> {
         ),
         ElevatedButton.icon(
           onPressed: () {},
-          icon: const Icon(Icons.add),
-          label: const Text('Add New Project'),
+          icon: const Icon(Icons.add, color: Colors.white,),
+          label: const Text('Add New Project', style:TextStyle( color: Colors.white,)),
           style: ElevatedButton.styleFrom(
             backgroundColor: AppColors.primary,
             padding: const EdgeInsets.symmetric(
@@ -158,6 +163,7 @@ class _DashboardPageState extends State<DashboardPage> {
       ],
     );
   }
+  
 
   Widget _buildChartsSection() {
     return Row(
@@ -179,11 +185,65 @@ class _DashboardPageState extends State<DashboardPage> {
             title: 'Weekly Activity',
             subtitle: 'Task Completion Rate',
             chart: const BarChartWidget(),
-          ),
         ),
+      ),
       ],
     );
   }
+  Widget _buildDepartmentSection() {
+  return Container(
+    decoration: BoxDecoration(
+      borderRadius: BorderRadius.circular(16),
+      color: AppColors.cardBackground,
+      border: Border.all(
+        color: Colors.grey.withOpacity(0.1),
+      ),
+    ),
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.fromLTRB(24, 24, 24, 0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              const Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Department Overview',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  SizedBox(height: 8),
+                  Text(
+                    'Employee distribution across departments',
+                    style: TextStyle(
+                      color: Colors.grey,
+                      fontSize: 14,
+                    ),
+                  ),
+                ],
+              ),
+              IconButton(
+                onPressed: () {},
+                icon: const Icon(
+                  Icons.more_horiz,
+                  color: Colors.grey,
+                ),
+              ),
+            ],
+          ),
+        ),
+        const SizedBox(height: 24),
+        const AdvancedPieChart(),
+      ],
+    ),
+  );
+}
 
   Widget _buildChartCard({
     required String title,
