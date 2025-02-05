@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_ui/core/presentation/widgets/charts/bar_chart_widget.dart';
 import 'package:flutter_ui/core/theme/app_color.dart';
 import 'package:flutter_ui/core/presentation/widgets/charts/line_chart_widget.dart';
 import 'package:flutter_ui/core/presentation/widgets/dashboard/stats_card.dart';
