@@ -112,6 +112,29 @@ class LineChartWidget extends StatelessWidget {
             ),
           ),
         ],
+         lineTouchData: LineTouchData(
+    getTouchedSpotIndicator: (LineChartBarData barData, List<int> spotIndexes) {
+      return spotIndexes.map((index) {
+        return TouchedSpotIndicatorData(
+        const  FlLine(
+            color: Colors.blue,  // liniya rangi
+            strokeWidth: 1,      // liniya qalinligi - buni kamaytirib ko'ring
+            dashArray: [3, 3],   // uzuq-uzuq chiziq uchun
+          ),
+          FlDotData(
+            show: true,
+            getDotPainter: (spot, percent, barData, index) =>
+              FlDotCirclePainter(
+                radius: 4,
+                color: Colors.white,
+                strokeWidth: 2,
+                strokeColor: Colors.blue,
+              ),
+          ),
+        );
+      }).toList();
+    },
+  ),
       ),
     );
   }

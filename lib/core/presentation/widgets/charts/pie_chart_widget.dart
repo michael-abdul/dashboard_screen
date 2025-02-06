@@ -265,7 +265,7 @@ class _AdvancedPieChartState extends State<AdvancedPieChart> {
               ),
             ],
           ),
-          const SizedBox(height: 24),
+          const SizedBox(height: 74),
           // Jami xodimlar soni
           Container(
             padding: const EdgeInsets.all(16),
