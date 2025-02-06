@@ -54,12 +54,13 @@ class _DashboardPageState extends State<DashboardPage> {
                         _buildStatsSection(),
                         const SizedBox(height: 32),
 
+                        // Department Chart Section
+                          const AdvancedPieChart(),
+                          
+                        const SizedBox(height: 32),
                         // Charts Section
                         _buildChartsSection(),
-                        const SizedBox(height: 32),
-
-                        // Department Chart Section
-                        _buildDepartmentSection(),
+                       
                         const SizedBox(height: 32),
 
                         // Recent Activity Section
@@ -77,51 +78,80 @@ class _DashboardPageState extends State<DashboardPage> {
   }
 
   Widget _buildWelcomeSection() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  return Container(
+    width: double.infinity,
+    margin: const EdgeInsets.only(bottom: 24),
+    child: Wrap(
+      alignment: WrapAlignment.spaceBetween,
+      spacing: 20,
+      runSpacing: 20,
       children: [
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Text(
-              'Good Morning, John! 👋',
-              style: TextStyles.heading1,
-            ),
-            const SizedBox(height: 8),
-            Text(
-              'Heres whats happening with your projects today',
-              style: TextStyle(
-                color: Colors.grey[400],
-                fontSize: 16,
-              ),
-            ),
-          ],
-        ),
-        ElevatedButton.icon(
-          onPressed: () {},
-          icon: const Icon(
-            Icons.add,
-            color: Colors.white,
+        // Left side - Welcome text
+        Container(
+          constraints: const BoxConstraints(
+            maxWidth: 600,  // Maximum width for text content
           ),
-          label: const Text('Add New Project',
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // Heading
+              const Text(
+                'Good Morning, John! 👋',
+                style: TextStyles.heading1,
+                overflow: TextOverflow.ellipsis,
+              ),
+              const SizedBox(height: 8),
+              // Subheading
+              Text(
+                'Here\'s what\'s happening with your projects today',
+                style: TextStyle(
+                  color: Colors.grey[400],
+                  fontSize: 16,
+                  height: 1.5,
+                ),
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+              ),
+            ],
+          ),
+        ),
+
+        // Right side - Add New Project button
+        SizedBox(
+          height: 48,  // Fixed height for button
+          child: ElevatedButton.icon(
+            onPressed: () {},
+            icon: const Icon(
+              Icons.add,
+              color: Colors.white,
+              size: 20,
+            ),
+            label: const Text(
+              'Add New Project',
               style: TextStyle(
                 color: Colors.white,
-              )),
-          style: ElevatedButton.styleFrom(
-            backgroundColor: AppColors.primary,
-            padding: const EdgeInsets.symmetric(
-              horizontal: 24,
-              vertical: 16,
+                fontSize: 14,
+                fontWeight: FontWeight.w500,
+              ),
             ),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(12),
+            style: ElevatedButton.styleFrom(
+              backgroundColor: AppColors.primary,
+              padding: const EdgeInsets.symmetric(
+                horizontal: 24,
+                vertical: 0,
+              ),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12),
+              ),
+              elevation: 0,
+              minimumSize: const Size(180, 48), // Minimum button width
             ),
           ),
         ),
       ],
-    );
-  }
-
+    ),
+  );
+}
   Widget _buildStatsSection() {
     final screenWidth = MediaQuery.of(context).size.width;
     final isSmallScreen = screenWidth < 1200;
@@ -257,60 +287,7 @@ class _DashboardPageState extends State<DashboardPage> {
     );
   }
 
-  Widget _buildDepartmentSection() {
-    return Container(
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(16),
-        color: AppColors.cardBackground,
-        border: Border.all(
-          color: Colors.grey.withOpacity(0.1),
-        ),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Padding(
-            padding: const EdgeInsets.fromLTRB(24, 24, 24, 0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                const Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Department Overview',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    SizedBox(height: 8),
-                    Text(
-                      'Employee distribution across departments',
-                      style: TextStyle(
-                        color: Colors.grey,
-                        fontSize: 14,
-                      ),
-                    ),
-                  ],
-                ),
-                IconButton(
-                  onPressed: () {},
-                  icon: const Icon(
-                    Icons.more_horiz,
-                    color: Colors.grey,
-                  ),
-                ),
-              ],
-            ),
-          ),
-          const SizedBox(height: 24),
-          const AdvancedPieChart(),
-        ],
-      ),
-    );
-  }
+
 
   Widget _buildChartCard({
     required String title,

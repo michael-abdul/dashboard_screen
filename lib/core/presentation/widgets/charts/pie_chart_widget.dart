@@ -1,15 +1,17 @@
-// lib/presentation/widgets/charts/advanced_pie_chart.dart
+// Kerakli Flutter paketlarini import qilish
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_ui/core/theme/app_color.dart';
 
+// Bo'limlar uchun ma'lumotlar modeli
 class DepartmentData {
-  final String name;
-  final double percentage;
-  final Color color;
-  final IconData icon;
-  final int employeeCount;
+  final String name;         // Bo'lim nomi
+  final double percentage;   // Bo'limning foizdagi ulushi
+  final Color color;        // Bo'lim rangi
+  final IconData icon;      // Bo'lim ikonkasi
+  final int employeeCount;  // Xodimlar soni
 
+  // Konstruktor - barcha maydonlar majburiy
   const DepartmentData({
     required this.name,
     required this.percentage,
@@ -19,6 +21,7 @@ class DepartmentData {
   });
 }
 
+// Asosiy widget - Pie Chart yaratish uchun
 class AdvancedPieChart extends StatefulWidget {
   const AdvancedPieChart({super.key});
 
@@ -27,9 +30,12 @@ class AdvancedPieChart extends StatefulWidget {
 }
 
 class _AdvancedPieChartState extends State<AdvancedPieChart> {
+  // Tanlangan bo'lim indeksi (-1 hech qaysi tanlanmagan)
   int touchedIndex = -1;
 
+  // Bo'limlar ro'yxati va ularning ma'lumotlari
   final departments = [
+    // Marketing bo'limi ma'lumotlari
     const DepartmentData(
       name: 'Marketing',
       percentage: 15.2,
@@ -37,6 +43,7 @@ class _AdvancedPieChartState extends State<AdvancedPieChart> {
       icon: Icons.campaign_outlined,
       employeeCount: 45,
     ),
+    // Sotuvlar bo'limi ma'lumotlari
     const DepartmentData(
       name: 'Sales',
       percentage: 18.2,
@@ -44,6 +51,7 @@ class _AdvancedPieChartState extends State<AdvancedPieChart> {
       icon: Icons.trending_up_outlined,
       employeeCount: 54,
     ),
+    // Moliya bo'limi ma'lumotlari
     const DepartmentData(
       name: 'Finance',
       percentage: 12.1,
@@ -51,6 +59,7 @@ class _AdvancedPieChartState extends State<AdvancedPieChart> {
       icon: Icons.attach_money_outlined,
       employeeCount: 36,
     ),
+    // HR bo'limi ma'lumotlari
     const DepartmentData(
       name: 'Human Resources',
       percentage: 9.1,
@@ -58,6 +67,7 @@ class _AdvancedPieChartState extends State<AdvancedPieChart> {
       icon: Icons.people_outline,
       employeeCount: 27,
     ),
+    // IT bo'limi ma'lumotlari
     const DepartmentData(
       name: 'IT',
       percentage: 24.2,
@@ -65,6 +75,7 @@ class _AdvancedPieChartState extends State<AdvancedPieChart> {
       icon: Icons.computer_outlined,
       employeeCount: 72,
     ),
+    // Operatsiyalar bo'limi ma'lumotlari
     const DepartmentData(
       name: 'Operations',
       percentage: 21.2,
@@ -76,8 +87,10 @@ class _AdvancedPieChartState extends State<AdvancedPieChart> {
 
   @override
   Widget build(BuildContext context) {
+    // Asosiy konteyner
     return Container(
       padding: const EdgeInsets.all(24),
+      // Konteyner dizayni
       decoration: BoxDecoration(
         color: AppColors.cardBackground,
         borderRadius: BorderRadius.circular(16),
@@ -87,10 +100,11 @@ class _AdvancedPieChartState extends State<AdvancedPieChart> {
       ),
       child: Column(
         children: [
-          // Header
+          // Sarlavha qismi
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
+              // Sarlavha va tavsif matni
               const Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -112,6 +126,7 @@ class _AdvancedPieChartState extends State<AdvancedPieChart> {
                   ),
                 ],
               ),
+              // Qo'shimcha opsiyalar tugmasi
               IconButton(
                 onPressed: () {},
                 icon: const Icon(
@@ -122,25 +137,28 @@ class _AdvancedPieChartState extends State<AdvancedPieChart> {
             ],
           ),
           const SizedBox(height: 32),
-          // Chart Section
+          // Diagramma qismi
           Row(
             children: [
-              // Pie Chart
+              // Pie Chart joylashuvi
               Expanded(
                 flex: 2,
                 child: AspectRatio(
                   aspectRatio: 1.5,
                   child: PieChart(
                     PieChartData(
+                      // Teginish uchun ma'lumotlar
                       pieTouchData: PieTouchData(
                         touchCallback: (FlTouchEvent event, pieTouchResponse) {
                           setState(() {
+                            // Teginish holatini tekshirish
                             if (!event.isInterestedForInteractions ||
                                 pieTouchResponse == null ||
                                 pieTouchResponse.touchedSection == null) {
                               touchedIndex = -1;
                               return;
                             }
+                            // Tanlangan qismni yangilash
                             touchedIndex = pieTouchResponse.touchedSection!.touchedSectionIndex;
                           });
                         },
@@ -154,7 +172,7 @@ class _AdvancedPieChartState extends State<AdvancedPieChart> {
                 ),
               ),
               const SizedBox(width: 48),
-              // Legend
+              // Diagramma elementi
               Expanded(
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
@@ -163,6 +181,7 @@ class _AdvancedPieChartState extends State<AdvancedPieChart> {
                     final dept = entry.value;
                     final isSelected = touchedIndex == index;
 
+                    // Bo'lim elementini yaratish
                     return Padding(
                       padding: const EdgeInsets.symmetric(vertical: 8.0),
                       child: MouseRegion(
@@ -173,6 +192,7 @@ class _AdvancedPieChartState extends State<AdvancedPieChart> {
                               touchedIndex = index;
                             });
                           },
+                          // Bo'lim elementi dizayni
                           child: AnimatedContainer(
                             duration: const Duration(milliseconds: 300),
                             padding: const EdgeInsets.symmetric(
@@ -191,6 +211,7 @@ class _AdvancedPieChartState extends State<AdvancedPieChart> {
                                 width: 2,
                               ),
                             ),
+                            // Bo'lim ma'lumotlari
                             child: Row(
                               children: [
                                 Icon(
@@ -245,7 +266,7 @@ class _AdvancedPieChartState extends State<AdvancedPieChart> {
             ],
           ),
           const SizedBox(height: 24),
-          // Total Employees
+          // Jami xodimlar soni
           Container(
             padding: const EdgeInsets.all(16),
             decoration: BoxDecoration(
@@ -292,6 +313,7 @@ class _AdvancedPieChartState extends State<AdvancedPieChart> {
     );
   }
 
+  // Pie Chart seksiyalarini generatsiya qilish
   List<PieChartSectionData> _generateSections() {
     return departments.asMap().entries.map((entry) {
       final index = entry.key;
@@ -300,6 +322,7 @@ class _AdvancedPieChartState extends State<AdvancedPieChart> {
       final radius = isTouched ? 110.0 : 100.0;
       final fontSize = isTouched ? 16.0 : 14.0;
 
+      // Har bir seksiya uchun ma'lumotlar
       return PieChartSectionData(
         color: dept.color,
         value: dept.percentage,
@@ -322,6 +345,7 @@ class _AdvancedPieChartState extends State<AdvancedPieChart> {
   }
 }
 
+// Badge widget - tanlangan seksiya uchun ko'rsatiladigan belgi
 class _Badge extends StatelessWidget {
   const _Badge(
     this.icon, {
@@ -329,12 +353,13 @@ class _Badge extends StatelessWidget {
     required this.borderColor,
   });
 
-  final IconData icon;
-  final double size;
-  final Color borderColor;
+  final IconData icon;      // Belgi ikonkasi
+  final double size;        // Belgi o'lchami
+  final Color borderColor;  // Chegara rangi
 
   @override
   Widget build(BuildContext context) {
+    // Badge dizayni
     return AnimatedContainer(
       duration: const Duration(milliseconds: 300),
       width: size,
@@ -364,4 +389,3 @@ class _Badge extends StatelessWidget {
     );
   }
 }
-
