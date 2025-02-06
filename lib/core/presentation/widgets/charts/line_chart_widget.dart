@@ -57,10 +57,11 @@ class LineChartWidget extends StatelessWidget {
                     text = 'Nov';
                     break;
                   default:
-                    return Container();
+                    return const SizedBox();
                 }
                 return Text(text, style: style);
               },
+               interval: 2, 
             ),
           ),
           leftTitles: AxisTitles(

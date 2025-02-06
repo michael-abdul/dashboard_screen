@@ -165,13 +165,13 @@ class _AdvancedPieChartState extends State<AdvancedPieChart> {
                       ),
                       borderData: FlBorderData(show: false),
                       sectionsSpace: 2,
-                      centerSpaceRadius: 60,
+                      centerSpaceRadius: 100,
                       sections: _generateSections(),
                     ),
                   ),
                 ),
               ),
-              const SizedBox(width: 48),
+              const SizedBox(width: 38),
               // Diagramma elementi
               Expanded(
                 child: Column(
@@ -265,7 +265,7 @@ class _AdvancedPieChartState extends State<AdvancedPieChart> {
               ),
             ],
           ),
-          const SizedBox(height: 74),
+          const SizedBox(height: 34),
           // Jami xodimlar soni
           Container(
             padding: const EdgeInsets.all(16),

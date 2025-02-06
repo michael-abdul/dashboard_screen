@@ -57,7 +57,7 @@ class _DashboardPageState extends State<DashboardPage> {
                           builder: (context, constraints) {
                             // Pie chart uchun standart o'lchamlar
                             final bool isLargeScreen =
-                                constraints.maxWidth > 1400;
+                                constraints.maxWidth > 1350;
                             final bool isMediumScreen =
                                 constraints.maxWidth > 650;
 
