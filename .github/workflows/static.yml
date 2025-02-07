@@ -37,7 +37,7 @@ jobs:
       - name: Install dependencies and build web app
         run: |
           flutter pub get
-          flutter build web --release
+          flutter build web --release --base-href "/dashboard_screen/" --web-renderer html
 
       # GitHub Pages uchun sahifani sozlash
       - name: Setup GitHub Pages
