@@ -31,7 +31,7 @@ jobs:
       - name: Set up Flutter SDK
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.10.0' # Kerakli Flutter versiyasini yozing
+          flutter-version: '3.16.0' # Kerakli Flutter versiyasini yozing
 
       # Flutterni sozlash va web uchun build qilish
       - name: Install dependencies and build web app
