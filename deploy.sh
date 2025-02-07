@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # 서버의 프로젝트 경로 (수정 필요)
-SERVER_PATH="/var/www/my_flutter_ui"
+SERVER_PATH="/var/www/my_flutter_ui/dashboard_screen"
 
 # 로그 함수
 log() {
