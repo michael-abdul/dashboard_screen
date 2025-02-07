@@ -1,0 +1,55 @@
+name: Deploy Flutter Web App to GitHub Pages
+
+on:
+  # Har safar master branchga push qilinganda ishga tushadi
+  push:
+    branches: ["master"]
+  # Manual tarzda ham ishga tushirish imkoniyati
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  build-and-deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      # Repositoryni yuklab olish
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # Flutter SDK ni o'rnatish
+      - name: Set up Flutter SDK
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.10.0' # Kerakli Flutter versiyasini yozing
+
+      # Flutterni sozlash va web uchun build qilish
+      - name: Install dependencies and build web app
+        run: |
+          flutter pub get
+          flutter build web --release
+
+      # GitHub Pages uchun sahifani sozlash
+      - name: Setup GitHub Pages
+        uses: actions/configure-pages@v5
+
+      # Build natijalarini yuklash
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: 'build/web' # Flutter web build natijalari joylashgan papka
+
+      # GitHub Pagesga joylash
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
