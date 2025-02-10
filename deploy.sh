@@ -1,38 +1,35 @@
 #!/bin/bash
 
-# 서버의 프로젝트 경로 (수정 필요)
-SERVER_PATH="/var/www/my_flutter_ui/dashboard_screen"
-
 # 로그 함수
 log() {
     echo "[$(date +'%Y-%m-%d %H:%M:%S')] $1"
 }
 
-# 1. Flutter 빌드
-log "Flutter 웹 앱 빌드 중..."
-cd $SERVER_PATH || { log "오류: $SERVER_PATH로 이동 실패"; exit 1; }
-flutter build web --release
-if [ $? -ne 0 ]; then
-    log "오류: Flutter 웹 앱 빌드 실패."
-    exit 1
-fi
+#PRODUCTION
+log "Git 리포지토리 초기화 중..."
+git reset --hard
+log "Git master 브랜치로 전환 중..."
+git checkout master
+log "Git 최신 변경사항을 가져오는 중..."
+git pull origin master
 
-# 2. 권한 설정
-log "서버 권한 설정 중..."
-chmod -R 755 $SERVER_PATH/build/web
-chown -R www-data:www-data $SERVER_PATH/build/web
-if [ $? -ne 0 ]; then
-    log "오류: 권한 설정 실패."
-    exit 1
-fi
+# 2. 플러터 설정
 
-# 3. Nginx 재시작
+log "Flutter 캐시 정리 중..."
+flutter clean
+log "Flutter 의존성 설치 중..."
+flutter pub get
+log " Flutter build 중..."
+flutter build web
+log "Flutter 웹 빌드 완료..."
+
+# 3. Nginx 설정
+sudo ln -s /etc/nginx/sites-available/dashboard_screen /etc/nginx/sites-enabled/
+log "새로운 설정 파일이 활성화됨됨:/etc/nginx/sites-available/dashboard_screen"
+log "Nginx 설정 테스트 중..."
+sudo nginx -t
 log "Nginx 재시작 중..."
-systemctl restart nginx
-if [ $? -ne 0 ]; then
-    log "오류: Nginx 재시작 실패."
-    exit 1
-fi
-
+sudo systemctl restart nginx
+log "Nginx 성공적으로 재시작됨"
 # 완료
 log "배포가 성공적으로 완료되었습니다!"
