@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'core/theme/app_theme.dart';
+import 'package:flutter_ui/core/light_theme/app_theme.dart';
+
 import 'package:flutter_ui/core/presentation/pages/dashboard_page.dart';
 import 'dart:io' show Platform;
 import 'package:flutter/foundation.dart' show kIsWeb;
@@ -7,8 +8,8 @@ import 'package:window_size/window_size.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  // Web yoki Desktop ekanligini tekshirish
-  if (!kIsWeb) {  // Agar web EMAS bo'lsa
+
+  if (!kIsWeb) {
     if (Platform.isWindows || Platform.isLinux || Platform.isMacOS) {
       setWindowMinSize(const Size(1024, 768));
     }
@@ -23,7 +24,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Analytics Dashboard',
-      theme: AppTheme.darkTheme,
+      theme: AppTheme.lightTheme, // Changed to light theme
       debugShowCheckedModeBanner: false,
       builder: (context, child) {
         return Container(
@@ -39,45 +40,41 @@ class MyApp extends StatelessWidget {
   }
 }
 
-// Yangi wrapper widget
-
-// Yangi wrapper widget
+// DashboardWrapper widget
 class DashboardWrapper extends StatelessWidget {
   const DashboardWrapper({super.key});
 
   @override
   Widget build(BuildContext context) {
-    // Ekranning balandligini olish
     final screenHeight = MediaQuery.of(context).size.height;
 
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
           children: [
-            // Birinchi DashboardPage()
             Padding(
               padding: const EdgeInsets.all(16.0),
               child: SizedBox(
-                height: screenHeight, // Ekran balandligining 80% ni egallaydi
+                height: screenHeight,
                 child: const DashboardPage(),
               ),
             ),
-            // Ikkinchi DashboardPage()
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: SizedBox(
-                height: screenHeight, // Ekran balandligining 80% ni egallaydi
-                child: const DashboardPage(),
-              ),
-            ),
-            // Uchinchi DashboardPage()
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: SizedBox(
-                height: screenHeight, // Ekran balandligining 80% ni egallaydi
-                child: const DashboardPage(),
-              ),
-            ),
+
+            // Padding(
+            //   padding: const EdgeInsets.all(16.0),
+            //   child: SizedBox(
+            //     height: screenHeight,
+            //     child: const DashboardPage(),
+            //   ),
+            // ),
+
+            // Padding(
+            //   padding: const EdgeInsets.all(16.0),
+            //   child: SizedBox(
+            //     height: screenHeight,
+            //     child: const DashboardPage(),
+            //   ),
+            // ),
           ],
         ),
       ),

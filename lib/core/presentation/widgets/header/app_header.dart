@@ -1,86 +1,87 @@
-// lib/presentation/widgets/header/app_header.dart
 import 'package:flutter/material.dart';
-import 'package:flutter_ui/core/theme/app_color.dart';
-import 'package:flutter_ui/core/theme/text_styles.dart';
-// AppHeader klassi - asosiy header UI ni yaratadigan klass
+import 'package:flutter_ui/core/light_theme/app_color.dart';
+
 class AppHeader extends StatelessWidget {
   const AppHeader({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        final isSmallScreen = constraints.maxWidth < 600;
-        
-        return Container(
-          height: 70,
-          padding: const EdgeInsets.symmetric(horizontal: 24),
-          decoration: BoxDecoration(
-            color: AppColors.cardBackground,
-            border: Border(
-              bottom: BorderSide(
-                color: Colors.grey.withOpacity(0.2),
+    return LayoutBuilder(builder: (context, constraints) {
+      final isSmallScreen = constraints.maxWidth < 600;
+
+      return Container(
+        height: 70,
+        padding: const EdgeInsets.symmetric(horizontal: 24),
+        decoration: BoxDecoration(
+          color: AppColors.cardBackground,
+          border: const Border(
+            bottom: BorderSide(
+              color: AppColors.border,
+            ),
+          ),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withAlpha(50),
+              blurRadius: 4,
+              offset: const Offset(0, 2),
+            ),
+          ],
+        ),
+        child: Row(
+          children: [
+            // Left section - Always visible
+            const Text(
+              'Dashboard',
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+                color: AppColors.textPrimary,
               ),
             ),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withOpacity(0.1),
-                blurRadius: 4,
-                offset: const Offset(0, 2),
-              ),
-            ],
-          ),
-          child: Row(
-            children: [
-              // Left section - Always visible
-              const Text('Dashboard', style: TextStyles.heading2),
-              SizedBox(width: isSmallScreen ? 20 : 40),
+            SizedBox(width: isSmallScreen ? 20 : 40),
 
-              // Search bar - Hidden on small screens
-              if (!isSmallScreen) 
-                Expanded(
-                  child: ConstrainedBox(
-                    constraints: const BoxConstraints(maxWidth: 400),
-                    child: _buildSearchBar(),
-                  ),
+            // Search bar - Hidden on small screens
+            if (!isSmallScreen)
+              Expanded(
+                child: ConstrainedBox(
+                  constraints: const BoxConstraints(maxWidth: 400),
+                  child: _buildSearchBar(),
                 ),
-
-              // Right section
-              Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  // Only show notifications on medium and large screens
-                  if (!isSmallScreen) ...[
-                    _buildActionButtons(),
-                    const SizedBox(width: 16),
-                  ],
-                  
-                  // Profile menu - Simplified on small screens
-                  isSmallScreen 
-                    ? _buildSimpleProfileMenu() 
-                    : _buildProfileMenu(),
-                    
-                  // Add search icon button on small screens
-                  if (isSmallScreen) ...[
-                    const SizedBox(width: 8),
-                    IconButton(
-                      onPressed: () {
-                        // Show search dialog or navigate to search page
-                      },
-                      icon: Icon(
-                        Icons.search_rounded,
-                        color: Colors.grey[400],
-                        size: 24,
-                      ),
-                    ),
-                  ],
-                ],
               ),
-            ],
-          ),
-        );
-      }
-    );
+
+            // Right section
+            Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                // Only show notifications on medium and large screens
+                if (!isSmallScreen) ...[
+                  _buildActionButtons(),
+                  const SizedBox(width: 16),
+                ],
+
+                // Profile menu - Simplified on small screens
+                isSmallScreen ? _buildSimpleProfileMenu() : _buildProfileMenu(),
+
+                // Add search icon button on small screens
+                if (isSmallScreen) ...[
+                  const SizedBox(width: 8),
+                  IconButton(
+                    onPressed: () {
+                      // Show search dialog or navigate to search page
+                    },
+                    icon: const Icon(
+                      Icons.search_rounded,
+                      color: AppColors.textSecondary,
+                      size: 24,
+                    ),
+                  ),
+                ],
+              ],
+            ),
+          ],
+        ),
+      );
+    });
   }
 
   // Simplified profile menu for small screens
@@ -94,11 +95,11 @@ class AppHeader extends StatelessWidget {
         padding: const EdgeInsets.all(8),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(8),
-          border: Border.all(color: Colors.grey.withOpacity(0.2)),
+          border: Border.all(color: AppColors.border),
         ),
         child: CircleAvatar(
           radius: 18,
-          backgroundColor: AppColors.primary.withOpacity(0.1),
+          backgroundColor: AppColors.primary.withAlpha(50),
           child: const Text(
             'JD',
             style: TextStyle(
@@ -110,13 +111,16 @@ class AppHeader extends StatelessWidget {
         ),
       ),
       itemBuilder: (context) => <PopupMenuEntry<String>>[
-        _buildPopupMenuItem('profile', Icons.person_outline_rounded, 'My Profile'),
-        _buildPopupMenuItem('notifications', Icons.notifications_none_rounded, 'Notifications'),
+        _buildPopupMenuItem(
+            'profile', Icons.person_outline_rounded, 'My Profile'),
+        _buildPopupMenuItem(
+            'notifications', Icons.notifications_none_rounded, 'Notifications'),
         _buildPopupMenuItem('messages', Icons.email_outlined, 'Messages'),
         _buildPopupMenuItem('settings', Icons.settings_outlined, 'Settings'),
         _buildPopupMenuItem('help', Icons.help_outline_rounded, 'Help Center'),
         const PopupMenuDivider(height: 0.5),
-        _buildPopupMenuItem('logout', Icons.logout_rounded, 'Log Out', isDestructive: true),
+        _buildPopupMenuItem('logout', Icons.logout_rounded, 'Log Out',
+            isDestructive: true),
       ],
       onSelected: (value) {
         // Handle menu item selection
@@ -124,24 +128,24 @@ class AppHeader extends StatelessWidget {
     );
   }
 
-  // Original methods remain unchanged...
   Widget _buildSearchBar() {
     return Container(
       height: 40,
       decoration: BoxDecoration(
         color: AppColors.background,
         borderRadius: BorderRadius.circular(8),
-        border: Border.all(color: Colors.grey.withOpacity(0.2)),
+        border: Border.all(color: AppColors.border),
       ),
       child: TextField(
-        decoration: InputDecoration(
+        decoration: const InputDecoration(
           hintText: 'Search...',
-          hintStyle: TextStyle(color: Colors.grey[400], fontSize: 14),
-          prefixIcon: Icon(Icons.search_rounded, color: Colors.grey[400], size: 20),
+          hintStyle: TextStyle(color: AppColors.textSecondary, fontSize: 14),
+          prefixIcon: Icon(Icons.search_rounded,
+              color: AppColors.textSecondary, size: 20),
           border: InputBorder.none,
-          contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+          contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
         ),
-        style: const TextStyle(color: Colors.white, fontSize: 14),
+        style: const TextStyle(color: AppColors.textPrimary, fontSize: 14),
         cursorColor: AppColors.primary,
         onChanged: (value) {},
       ),
@@ -186,7 +190,7 @@ class AppHeader extends StatelessWidget {
           child: Stack(
             alignment: Alignment.center,
             children: [
-              Icon(icon, color: Colors.grey[400], size: 22),
+              Icon(icon, color: AppColors.textSecondary, size: 22),
               if (badge.isNotEmpty)
                 Positioned(
                   right: 4,
@@ -196,11 +200,12 @@ class AppHeader extends StatelessWidget {
                     decoration: BoxDecoration(
                       color: AppColors.error,
                       shape: BoxShape.circle,
-                      border: Border.all(color: AppColors.cardBackground, width: 2),
+                      border:
+                          Border.all(color: AppColors.cardBackground, width: 2),
                     ),
-                    child: Text(
-                      badge,
-                      style: const TextStyle(
+                    child: const Text(
+                      '3',
+                      style: TextStyle(
                         color: Colors.white,
                         fontSize: 8,
                         fontWeight: FontWeight.bold,
@@ -225,14 +230,14 @@ class AppHeader extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(8),
-          border: Border.all(color: Colors.grey.withOpacity(0.2)),
+          border: Border.all(color: AppColors.border),
         ),
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
             CircleAvatar(
               radius: 18,
-              backgroundColor: AppColors.primary.withOpacity(0.1),
+              backgroundColor: AppColors.primary.withAlpha(50),
               child: const Text(
                 'JD',
                 style: TextStyle(
@@ -243,36 +248,40 @@ class AppHeader extends StatelessWidget {
               ),
             ),
             const SizedBox(width: 12),
-            Column(
+            const Column(
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text(
+                Text(
                   'John Doe',
                   style: TextStyle(
-                    color: Colors.white,
+                    color: AppColors.textPrimary,
                     fontWeight: FontWeight.w500,
                     fontSize: 14,
                   ),
                 ),
-                const SizedBox(height: 2),
+                SizedBox(height: 2),
                 Text(
                   'Administrator',
-                  style: TextStyle(color: Colors.grey[400], fontSize: 12),
+                  style:
+                      TextStyle(color: AppColors.textSecondary, fontSize: 12),
                 ),
               ],
             ),
             const SizedBox(width: 12),
-            Icon(Icons.keyboard_arrow_down_rounded, color: Colors.grey[400], size: 20),
+            const Icon(Icons.keyboard_arrow_down_rounded,
+                color: AppColors.textSecondary, size: 20),
           ],
         ),
       ),
       itemBuilder: (context) => <PopupMenuEntry<String>>[
-        _buildPopupMenuItem('profile', Icons.person_outline_rounded, 'My Profile'),
+        _buildPopupMenuItem(
+            'profile', Icons.person_outline_rounded, 'My Profile'),
         _buildPopupMenuItem('settings', Icons.settings_outlined, 'Settings'),
         _buildPopupMenuItem('help', Icons.help_outline_rounded, 'Help Center'),
         const PopupMenuDivider(height: 0.5),
-        _buildPopupMenuItem('logout', Icons.logout_rounded, 'Log Out', isDestructive: true),
+        _buildPopupMenuItem('logout', Icons.logout_rounded, 'Log Out',
+            isDestructive: true),
       ],
       onSelected: (value) {
         switch (value) {
@@ -303,13 +312,13 @@ class AppHeader extends StatelessWidget {
           Icon(
             icon,
             size: 20,
-            color: isDestructive ? AppColors.error : Colors.grey[400],
+            color: isDestructive ? AppColors.error : AppColors.textSecondary,
           ),
           const SizedBox(width: 12),
           Text(
             title,
             style: TextStyle(
-              color: isDestructive ? AppColors.error : Colors.white,
+              color: isDestructive ? AppColors.error : AppColors.textPrimary,
               fontSize: 14,
             ),
           ),

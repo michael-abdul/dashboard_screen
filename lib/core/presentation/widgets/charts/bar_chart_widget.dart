@@ -1,6 +1,6 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_ui/core/theme/app_color.dart';
+import 'package:flutter_ui/core/light_theme/app_color.dart';
 
 class BarChartWidget extends StatelessWidget {
   const BarChartWidget({super.key});
@@ -14,7 +14,7 @@ class BarChartWidget extends StatelessWidget {
         barTouchData: BarTouchData(
           enabled: true,
           touchTooltipData: BarTouchTooltipData(
-            tooltipBgColor: Colors.grey[800]!,
+            tooltipBgColor: AppColors.textPrimary.withAlpha(204),
             getTooltipItem: (group, groupIndex, rod, rodIndex) {
               return BarTooltipItem(
                 '${rod.toY.round()}k',
@@ -33,7 +33,7 @@ class BarChartWidget extends StatelessWidget {
               showTitles: true,
               getTitlesWidget: (value, meta) {
                 const style = TextStyle(
-                  color: Colors.grey,
+                  color: AppColors.textSecondary,
                   fontSize: 12,
                 );
                 String text;
@@ -77,7 +77,8 @@ class BarChartWidget extends StatelessWidget {
               getTitlesWidget: (value, meta) {
                 return Text(
                   '\$${value.toInt()}k',
-                  style: const TextStyle(color: Colors.grey, fontSize: 12),
+                  style: const TextStyle(
+                      color: AppColors.textSecondary, fontSize: 12),
                 );
               },
             ),
@@ -94,7 +95,7 @@ class BarChartWidget extends StatelessWidget {
           drawHorizontalLine: true,
           getDrawingHorizontalLine: (value) {
             return FlLine(
-              color: Colors.grey.withOpacity(0.1),
+              color: AppColors.border.withAlpha(128),
               strokeWidth: 1,
             );
           },

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_ui/core/theme/app_color.dart';
+import 'package:flutter_ui/core/light_theme/app_color.dart';
 
 class SidebarMenu extends StatelessWidget {
   final int selectedIndex;
@@ -15,7 +15,7 @@ class SidebarMenu extends StatelessWidget {
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
     final isSmallScreen = screenWidth < 1200;
-    
+
     return AnimatedContainer(
       duration: const Duration(milliseconds: 200),
       width: isSmallScreen ? 220 : 280,
@@ -23,13 +23,13 @@ class SidebarMenu extends StatelessWidget {
         minWidth: 220,
         maxWidth: 280,
       ),
-      color: AppColors.cardBackground,
+      color: Colors.white, // Changed to white for light theme
       child: Column(
         children: [
           // Logo and Brand
           _buildLogoSection(isSmallScreen),
-          const Divider(color: Colors.grey, height: 1),
-          
+          const Divider(color: AppColors.border, height: 1),
+
           // Menu Items
           Expanded(
             child: SingleChildScrollView(
@@ -49,7 +49,7 @@ class SidebarMenu extends StatelessWidget {
               ),
             ),
           ),
-          
+
           // User Profile Section
           _buildProfileSection(isSmallScreen),
         ],
@@ -68,7 +68,7 @@ class SidebarMenu extends StatelessWidget {
           Container(
             padding: EdgeInsets.all(isSmallScreen ? 6 : 8),
             decoration: BoxDecoration(
-              color: AppColors.primary.withOpacity(0.1),
+              color: AppColors.primary.withAlpha(50),
               borderRadius: BorderRadius.circular(12),
             ),
             child: Icon(
@@ -82,7 +82,7 @@ class SidebarMenu extends StatelessWidget {
             child: Text(
               isSmallScreen ? 'Analytics' : 'Analytics Pro',
               style: TextStyle(
-                color: Colors.white,
+                color: AppColors.textPrimary,
                 fontSize: isSmallScreen ? 16 : 20,
                 fontWeight: FontWeight.bold,
               ),
@@ -116,13 +116,14 @@ class SidebarMenu extends StatelessWidget {
           child: const Text(
             'WORKSPACE',
             style: TextStyle(
-              color: Colors.grey,
+              color: AppColors.textSecondary,
               fontSize: 12,
               fontWeight: FontWeight.bold,
             ),
           ),
         ),
-        _buildMenuItem(5, Icons.folder_shared_rounded, 'Shared Files', isSmallScreen),
+        _buildMenuItem(
+            5, Icons.folder_shared_rounded, 'Shared Files', isSmallScreen),
         _buildMenuItem(6, Icons.star_rounded, 'Starred', isSmallScreen),
         _buildExpandableMenuItem(
           'Teams',
@@ -147,35 +148,37 @@ class SidebarMenu extends StatelessWidget {
           child: const Text(
             'TEAM',
             style: TextStyle(
-              color: Colors.grey,
+              color: AppColors.textSecondary,
               fontSize: 12,
               fontWeight: FontWeight.bold,
             ),
           ),
         ),
         _buildMenuItem(10, Icons.settings_rounded, 'Settings', isSmallScreen),
-        _buildMenuItem(11, Icons.help_outline_rounded, 'Help Center', isSmallScreen),
+        _buildMenuItem(
+            11, Icons.help_outline_rounded, 'Help Center', isSmallScreen),
       ],
     );
   }
 
-  Widget _buildMenuItem(int index, IconData icon, String title, bool isSmallScreen) {
+  Widget _buildMenuItem(
+      int index, IconData icon, String title, bool isSmallScreen) {
     final isSelected = selectedIndex == index;
     return Material(
       color: Colors.transparent,
       child: ListTile(
         onTap: () => onItemSelected(index),
         selected: isSelected,
-        selectedTileColor: AppColors.primary.withOpacity(0.1),
+        selectedTileColor: AppColors.primary.withAlpha(50),
         leading: Icon(
           icon,
-          color: isSelected ? AppColors.primary : Colors.grey,
+          color: isSelected ? AppColors.primary : AppColors.textSecondary,
           size: isSmallScreen ? 18 : 20,
         ),
         title: Text(
           title,
           style: TextStyle(
-            color: isSelected ? AppColors.primary : Colors.grey,
+            color: isSelected ? AppColors.primary : AppColors.textPrimary,
             fontSize: isSmallScreen ? 13 : 14,
             fontWeight: isSelected ? FontWeight.w600 : FontWeight.normal,
           ),
@@ -187,9 +190,8 @@ class SidebarMenu extends StatelessWidget {
           horizontal: isSmallScreen ? 16 : 24,
           vertical: isSmallScreen ? 6 : 8,
         ),
-        visualDensity: isSmallScreen 
-            ? VisualDensity.compact 
-            : VisualDensity.standard,
+        visualDensity:
+            isSmallScreen ? VisualDensity.compact : VisualDensity.standard,
       ),
     );
   }
@@ -202,28 +204,28 @@ class SidebarMenu extends StatelessWidget {
   ) {
     return Theme(
       data: ThemeData(
-        colorScheme: ColorScheme.dark(
+        colorScheme: const ColorScheme.light(
           primary: AppColors.primary,
         ),
       ),
       child: ExpansionTile(
         leading: Icon(
-          icon, 
-          color: Colors.grey, 
+          icon,
+          color: AppColors.textSecondary,
           size: isSmallScreen ? 18 : 20,
         ),
         title: Text(
           title,
           style: TextStyle(
-            color: Colors.grey, 
+            color: AppColors.textPrimary,
             fontSize: isSmallScreen ? 13 : 14,
           ),
         ),
         childrenPadding: EdgeInsets.only(
           left: isSmallScreen ? 12 : 16,
         ),
-        iconColor: Colors.grey,
-        collapsedIconColor: Colors.grey,
+        iconColor: AppColors.textSecondary,
+        collapsedIconColor: AppColors.textSecondary,
         children: children,
       ),
     );
@@ -234,37 +236,37 @@ class SidebarMenu extends StatelessWidget {
     return ListTile(
       onTap: () => onItemSelected(index),
       selected: isSelected,
-      selectedTileColor: AppColors.primary.withOpacity(0.1),
+      selectedTileColor: AppColors.primary.withAlpha(50),
       title: Text(
         title,
         style: TextStyle(
-          color: isSelected ? AppColors.primary : Colors.grey,
+          color: isSelected ? AppColors.primary : AppColors.textPrimary,
           fontSize: isSmallScreen ? 13 : 14,
         ),
       ),
       contentPadding: EdgeInsets.only(
-        left: isSmallScreen ? 56 : 72, 
+        left: isSmallScreen ? 56 : 72,
         right: isSmallScreen ? 16 : 24,
       ),
-      visualDensity: isSmallScreen 
-          ? VisualDensity.compact 
-          : VisualDensity.standard,
+      visualDensity:
+          isSmallScreen ? VisualDensity.compact : VisualDensity.standard,
     );
   }
 
   Widget _buildProfileSection(bool isSmallScreen) {
     return Container(
       padding: EdgeInsets.all(isSmallScreen ? 12 : 16),
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         border: Border(
-          top: BorderSide(color: Colors.grey.withOpacity(0.2)),
+          top: BorderSide(color: AppColors.border),
         ),
+        color: Colors.white,
       ),
       child: Row(
         children: [
           CircleAvatar(
             radius: isSmallScreen ? 16 : 20,
-            backgroundColor: AppColors.primary.withOpacity(0.1),
+            backgroundColor: AppColors.primary.withAlpha(50),
             child: Text(
               'JD',
               style: TextStyle(
@@ -284,7 +286,7 @@ class SidebarMenu extends StatelessWidget {
                   Text(
                     'John Doe',
                     style: TextStyle(
-                      color: Colors.white,
+                      color: AppColors.textPrimary,
                       fontSize: 14,
                       fontWeight: FontWeight.w600,
                     ),
@@ -293,7 +295,7 @@ class SidebarMenu extends StatelessWidget {
                   Text(
                     'Administrator',
                     style: TextStyle(
-                      color: Colors.grey,
+                      color: AppColors.textSecondary,
                       fontSize: 12,
                     ),
                   ),
@@ -302,8 +304,8 @@ class SidebarMenu extends StatelessWidget {
             ),
           IconButton(
             icon: Icon(
-              Icons.more_vert, 
-              color: Colors.grey,
+              Icons.more_vert,
+              color: AppColors.textSecondary,
               size: isSmallScreen ? 20 : 24,
             ),
             onPressed: () {},
@@ -316,10 +318,10 @@ class SidebarMenu extends StatelessWidget {
   }
 
   Widget _buildDivider() {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8),
+    return const Padding(
+      padding: EdgeInsets.symmetric(vertical: 8),
       child: Divider(
-        color: Colors.grey.withOpacity(0.2),
+        color: AppColors.border,
         height: 1,
       ),
     );

@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_ui/core/light_theme/app_color.dart';
+import 'package:flutter_ui/core/light_theme/text_styles.dart';
 import 'package:flutter_ui/core/presentation/widgets/charts/bar_chart_widget.dart';
 import 'package:flutter_ui/core/presentation/widgets/charts/pie_chart_widget.dart';
-import 'package:flutter_ui/core/theme/app_color.dart';
 import 'package:flutter_ui/core/presentation/widgets/charts/line_chart_widget.dart';
 import 'package:flutter_ui/core/presentation/widgets/dashboard/stats_card.dart';
 import 'package:flutter_ui/core/presentation/widgets/header/app_header.dart';
 import 'package:flutter_ui/core/presentation/widgets/sidebar/sidebar_menu.dart';
-import 'package:flutter_ui/core/theme/text_styles.dart';
 
 class DashboardPage extends StatefulWidget {
   const DashboardPage({super.key});
@@ -191,21 +191,21 @@ class _DashboardPageState extends State<DashboardPage> {
             constraints: const BoxConstraints(
               maxWidth: 600, // Maximum width for text content
             ),
-            child: Column(
+            child: const Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 // Heading
-                const Text(
+                Text(
                   'Good Morning, John! 👋',
                   style: TextStyles.heading1,
                   overflow: TextOverflow.ellipsis,
                 ),
-                const SizedBox(height: 8),
+                SizedBox(height: 8),
                 // Subheading
                 Text(
                   'Here\'s what\'s happening with your projects today',
                   style: TextStyle(
-                    color: Colors.grey[400],
+                    color: AppColors.textSecondary,
                     fontSize: 16,
                     height: 1.5,
                   ),
@@ -243,7 +243,7 @@ class _DashboardPageState extends State<DashboardPage> {
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12),
                 ),
-                elevation: 0,
+                elevation: 2,
                 minimumSize: const Size(180, 48), // Minimum button width
               ),
             ),
@@ -373,8 +373,15 @@ class _DashboardPageState extends State<DashboardPage> {
         color: AppColors.cardBackground,
         borderRadius: BorderRadius.circular(16),
         border: Border.all(
-          color: Colors.grey.withOpacity(0.1),
+          color: AppColors.border,
         ),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withAlpha(50),
+            blurRadius: 10,
+            offset: const Offset(0, 4),
+          ),
+        ],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -392,17 +399,17 @@ class _DashboardPageState extends State<DashboardPage> {
                   const SizedBox(height: 4),
                   Text(
                     subtitle,
-                    style: TextStyle(
-                      color: Colors.grey[400],
+                    style: const TextStyle(
+                      color: AppColors.textSecondary,
                       fontSize: 14,
                     ),
                   ),
                 ],
               ),
               PopupMenuButton(
-                icon: Icon(
+                icon: const Icon(
                   Icons.more_vert,
-                  color: Colors.grey[400],
+                  color: AppColors.textSecondary,
                 ),
                 itemBuilder: (context) => [
                   const PopupMenuItem(
@@ -435,8 +442,15 @@ class _DashboardPageState extends State<DashboardPage> {
         color: AppColors.cardBackground,
         borderRadius: BorderRadius.circular(16),
         border: Border.all(
-          color: Colors.grey.withOpacity(0.1),
+          color: AppColors.border,
         ),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withAlpha(50),
+            blurRadius: 10,
+            offset: const Offset(0, 4),
+          ),
+        ],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -495,7 +509,7 @@ class _DashboardPageState extends State<DashboardPage> {
           Container(
             padding: const EdgeInsets.all(12),
             decoration: BoxDecoration(
-              color: color.withOpacity(0.1),
+              color: color.withAlpha(26),
               borderRadius: BorderRadius.circular(12),
             ),
             child: Icon(
@@ -512,7 +526,7 @@ class _DashboardPageState extends State<DashboardPage> {
                 Text(
                   title,
                   style: const TextStyle(
-                    color: Colors.white,
+                    color: AppColors.textPrimary,
                     fontSize: 16,
                     fontWeight: FontWeight.w500,
                   ),
@@ -520,8 +534,8 @@ class _DashboardPageState extends State<DashboardPage> {
                 const SizedBox(height: 4),
                 Text(
                   description,
-                  style: TextStyle(
-                    color: Colors.grey[400],
+                  style: const TextStyle(
+                    color: AppColors.textSecondary,
                     fontSize: 14,
                   ),
                 ),
@@ -530,8 +544,8 @@ class _DashboardPageState extends State<DashboardPage> {
           ),
           Text(
             time,
-            style: TextStyle(
-              color: Colors.grey[400],
+            style: const TextStyle(
+              color: AppColors.textSecondary,
               fontSize: 12,
             ),
           ),

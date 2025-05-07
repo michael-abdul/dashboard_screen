@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_ui/core/theme/app_color.dart';
+import 'package:flutter_ui/core/light_theme/app_color.dart';
 
 class StatsCard extends StatelessWidget {
   final String title;
@@ -24,10 +24,10 @@ class StatsCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      elevation: 0,
+      elevation: 2, // Added a light shadow
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(16),
-        side: BorderSide(color: Colors.grey.withOpacity(0.1)),
+        side: const BorderSide(color: AppColors.border),
       ),
       color: AppColors.cardBackground,
       child: Padding(
@@ -42,8 +42,8 @@ class StatsCard extends StatelessWidget {
               children: [
                 Text(
                   title,
-                  style: TextStyle(
-                    color: Colors.grey[400],
+                  style: const TextStyle(
+                    color: AppColors.textSecondary,
                     fontSize: 14,
                     fontWeight: FontWeight.w500,
                   ),
@@ -51,7 +51,7 @@ class StatsCard extends StatelessWidget {
                 Container(
                   padding: const EdgeInsets.all(8),
                   decoration: BoxDecoration(
-                    color: iconColor.withOpacity(0.1),
+                    color: iconColor.withAlpha(50),
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: Icon(
@@ -62,9 +62,9 @@ class StatsCard extends StatelessWidget {
                 ),
               ],
             ),
-            
+
             const SizedBox(height: 16),
-            
+
             // Value and SubValue
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -72,7 +72,7 @@ class StatsCard extends StatelessWidget {
                 Text(
                   value,
                   style: const TextStyle(
-                    color: Colors.white,
+                    color: AppColors.textPrimary,
                     fontSize: 24,
                     fontWeight: FontWeight.bold,
                   ),
@@ -80,16 +80,16 @@ class StatsCard extends StatelessWidget {
                 const SizedBox(height: 4),
                 Text(
                   subValue,
-                  style: TextStyle(
-                    color: Colors.grey[400],
+                  style: const TextStyle(
+                    color: AppColors.textSecondary,
                     fontSize: 14,
                   ),
                 ),
               ],
             ),
-            
+
             const SizedBox(height: 16),
-            
+
             // Percentage Change
             Row(
               children: [
@@ -100,17 +100,15 @@ class StatsCard extends StatelessWidget {
                   ),
                   decoration: BoxDecoration(
                     color: isIncreased
-                        ? Colors.green.withOpacity(0.1)
-                        : Colors.red.withOpacity(0.1),
+                        ? Colors.green.withAlpha(50)
+                        : Colors.red.withAlpha(50),
                     borderRadius: BorderRadius.circular(16),
                   ),
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       Icon(
-                        isIncreased
-                            ? Icons.arrow_upward
-                            : Icons.arrow_downward,
+                        isIncreased ? Icons.arrow_upward : Icons.arrow_downward,
                         color: isIncreased ? Colors.green : Colors.red,
                         size: 14,
                       ),
@@ -127,10 +125,10 @@ class StatsCard extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(width: 8),
-                Text(
+                const Text(
                   'vs last month',
                   style: TextStyle(
-                    color: Colors.grey[400],
+                    color: AppColors.textSecondary,
                     fontSize: 12,
                   ),
                 ),
